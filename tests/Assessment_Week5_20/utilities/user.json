@@ -1,0 +1,33 @@
+{
+  "url" : "https://automationexercise.com/",
+  "name": "Test User",
+  "email": "testeee19@gmail.com",
+  "password": "Test@123",
+   "title" : "Mr",
+
+  "address": {
+    "day" : "12",
+    "month" : "May",
+    "year": "2007",
+    "firstName": "Test",
+    "lastName": "User",
+    "company": "ABC Pvt Ltd",
+    "address1": "Lake City Road",
+    "address2": "Near City Mall",
+    "country": "India",
+    "state": "Rajasthan",
+    "city": "Udaipur",
+    "zipcode": "313001",
+    "mobile": "9999999999"
+  },
+
+  "product": "Dress",
+
+  "payment": {
+    "cardName": "Test User",
+    "cardNumber": "4111111111111111",
+    "cvc": "123",
+    "expiryMonth": "12",
+    "expiryYear": "2030"
+  }
+}
