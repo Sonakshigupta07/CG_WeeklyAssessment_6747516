@@ -27,4 +27,18 @@ export class ProductPage {
   async addFirstProductToCart() {
     await this.addProductToCart(); 
   }
+
+    async openFirstProductDetails() {
+    await this.page.locator('.product-image-wrapper a').first().click();
+  }
+
+  async writeReview(user: any) {
+    await this.page.locator('#review').scrollIntoViewIfNeeded();
+
+    await this.page.fill('#name', user.name);
+    await this.page.fill('#email', user.email);
+    await this.page.fill('#review', "This is a test review");
+
+    await this.page.click('#button-review');
+  }
 }

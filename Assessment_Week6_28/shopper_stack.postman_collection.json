@@ -1,0 +1,783 @@
+{
+  "info": {
+    "_postman_id": "e93f2bb0-5be3-4dc4-8ea7-ae49ffd1ff49",
+    "name": "shopper_stack",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53447816"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "To_Login",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// pm.globals.set(\"BASE_URL\", \"https://www.shoppersstack.com/shopping\");\r",
+                  "\r",
+                  "// let response = JSON.parse(responseBody)\r",
+                  "// pm.globals.set(\"token\", response.data.jwtToken);\r",
+                  "\r",
+                  "// pm.globals.set(\"Shopper_Id\", response.data.userId);\r",
+                  "\r",
+                  "pm.globals.set(\"base\", \"https://www.shoppersstack.com/shopping\");"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"sonakshigupta0710@gmail.com\",\r\n    \"password\" : \"Sonakshi@0917\",\r\n    \"role\" : \"SHOPPER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/users/login",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "view product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = JSON.parse(responseBody)\r",
+                  "\r",
+                  "pm.globals.set(\"Product_Id\", response.data[0].productId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"sonakshigupta0710@gmail.com\",\r\n    \"password\" : \"Sonakshi@0917\",\r\n    \"role\" : \"SHOPPER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/products/alpha",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "products",
+                "alpha"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "add the product to wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productId\" : 51,\r\n    \"quantity\" : 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/wishlist",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get the request from wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/wishlist",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete the product from wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/wishlist/{{Product_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "wishlist",
+                "{{Product_Id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "cart",
+      "item": [
+        {
+          "name": "get all the products from the cart",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "add the products to cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productId\" : 51,\r\n    \"quantity\" : 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/carts",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a product in cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\" : 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/carts/{{ItemId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "carts",
+                "{{ItemId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete a product from cart",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Address",
+      "item": [
+        {
+          "name": "get all address",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": 0,\r\n  \"buildingInfo\": \"Flat 103\",\r\n  \"city\": \"Jaipur\",\r\n  \"country\": \"India\",\r\n  \"landmark\": \"Near metro station\",\r\n  \"name\": \"sonakshi\",\r\n  \"phone\": \"8971258456\",\r\n  \"pincode\": \"302021\",\r\n  \"state\": \"Rajasthan\",\r\n  \"streetInfo\": \"Amer road\",\r\n  \"type\": \"HOME\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/address",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "address"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get a particular address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/address/{{Address_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "address",
+                "{{Address_Id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update the address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": 0,\r\n  \"buildingInfo\": \"Flat 103\",\r\n  \"city\": \"Agra\",\r\n  \"country\": \"India\",\r\n  \"landmark\": \"Near metro station\",\r\n  \"name\": \"sonakshi\",\r\n  \"phone\": \"8971258456\",\r\n  \"pincode\": \"302021\",\r\n  \"state\": \"Rajasthan\",\r\n  \"streetInfo\": \"Amer road\",\r\n  \"type\": \"HOME\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/address/{{Address_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "address",
+                "{{Address_Id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete an address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/address/{{Address_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "address",
+                "{{Address_Id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "Display order history",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/orders",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Place order from cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"address\": {\r\n    \"addressId\": {{Address_Id}},\r\n    \"buildingInfo\": \"Flat 103\",\r\n    \"city\": \"Agra\",\r\n    \"country\": \"India\",\r\n    \"landmark\": \"Near metro station\",\r\n    \"name\": \"sonakshi\",\r\n    \"phone\": \"8971258456\",\r\n    \"pincode\": \"432101\",\r\n    \"state\": \"Rajasthan\",\r\n    \"streetInfo\": \"Amer road\",\r\n    \"type\": \"HOME\"\r\n  },\r\n    \"paymentMode\": \"COD\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/orders",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update order status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"state\" : \"UP\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/orders/{{Order_Id}}/?status=DELIVERED",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "orders",
+                "{{Order_Id}}",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "DELIVERED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Generate invoice copy",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/shoppers/{{Shopper_Id}}/orders/{{Order_Id}}/invoice",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{Shopper_Id}}",
+                "orders",
+                "{{Order_Id}}",
+                "invoice"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "item": [
+        {
+          "name": "Add a review to delivered product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": 51,\r\n  \"shopperId\": 378172,\r\n  \"heading\": \"Product rating\",\r\n  \"description\": \"Nice product\",\r\n  \"rating\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/reviews",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all the reviews of product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/reviews/{{Product_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "reviews",
+                "{{Product_Id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update an added review",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dateTime\": \"2026-03-28T07:45:17.266Z\",\r\n  \"description\": \"Nice product\",\r\n  \"heading\": \"Product rating\",\r\n  \"rating\": 5,\r\n  \"shopperId\": 378172,\r\n  \"shopperName\": \"sonakshi\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base}}/reviews/{{reviewId}}/?productId={{Product_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "reviews",
+                "{{reviewId}}",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "{{Product_Id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete an added review",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base}}/reviews/{{reviewId}}/?productId={{Product_Id}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "reviews",
+                "{{reviewId}}",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "{{Product_Id}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

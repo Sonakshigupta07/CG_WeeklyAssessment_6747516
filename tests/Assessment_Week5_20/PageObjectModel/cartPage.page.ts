@@ -20,4 +20,9 @@ export class CartPage {
   async getCartQuantity() {
     return await this.page.locator('.cart_quantity button').first().textContent();
   }
+
+  async removeProduct() {
+  await this.page.locator('.cart_quantity_delete').first().click();
+}
+
 }
