@@ -1,0 +1,30 @@
+{
+    "username": "admin",
+    "password": "password123",
+
+    "booking" : {
+        "firstname": "Sonakshi",
+        "lastname": "Gupta",
+        "totalprice": 5000,
+        "depositpaid": true,
+        "bookingdates": {
+        "checkin": "2024-01-01",
+        "checkout": "2024-01-05"
+                },
+        "additionalneeds": "Breakfast"
+    },
+    "updateBooking" :{
+        "firstname": "Sonakshi",
+        "lastname": "Gupta",
+        "totalprice": 6000,
+        "depositpaid": true,
+        "bookingdates": {
+        "checkin": "2024-01-01",
+        "checkout": "2024-01-05"
+                },
+        "additionalneeds": "Breakfast"
+    },
+    "partialUpdate" :{
+        "firstname" : "UpdatedName"
+    }
+}
